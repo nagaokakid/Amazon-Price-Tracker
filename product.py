@@ -1,13 +1,26 @@
+from datetime import datetime
+from tabulate import tabulate
+
 class Product:
 
+    # Constructors
     def __init__(self):
         self.name = None
         self.start_price = None
         self.current_price = None
         self.previous_price = None
         self.availability = None
-        self.creation_date = None
-        self.last_update = None
+        self.creation_date = datetime.now()
+        self.last_update = self.creation_date
+        self.is_lower_price = False
+    def __init__(self, name, price, availability):
+        self.name = name
+        self.start_price = price
+        self.current_price = price
+        self.previous_price = price
+        self.availability = availability
+        self.creation_date = datetime.now()
+        self.last_update = self.creation_date
         self.is_lower_price = False
 
     def __str__(self):
