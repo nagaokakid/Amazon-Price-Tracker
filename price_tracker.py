@@ -11,7 +11,7 @@ from product import Product
 # Main function
 def main():
     driver = createWebDriver()
-    url = "https://www.amazon.ca/R%C3%89GIME-BAS-R%C3%A9%C3%A9quilibrez-alimentation-quotidiennement/dp/B0C6W8CZ1H/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr="
+    url = "https://www.amazon.ca/TRESemm%C3%A9-Botanique-Replenish-formulated-TechnologyTM/dp/B0BS763BBP/ref=sr_1_5?keywords=shampoo&qid=1687395876&sr=8-5"
     navigateToURL(driver, url)
     product_tuple = scrapeProductInfo(driver)   # tuple of strings about product info (name, price, availability)
     product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
@@ -61,15 +61,16 @@ def runInterface():
 # search through the html DOM and extract product information
 def scrapeProductInfo(driver):
     try:
-        # get the price
-        price = findProductPrice(driver)
 
         # get the name
         name = findProductName(driver)
 
+        # get the price
+        price = findProductPrice(driver)
+
         # get the availability
         availability = findProductAvailability(driver)
-
+        
         string_tuple = (name, price, availability)
 
     # failed to find all product details; throw exception
@@ -85,12 +86,13 @@ def findProductPrice(driver):
     # first, try finding price for regular products
     try:
         parent_div = driver.find_element(By.ID, "corePrice_feature_div")
-        currency = (parent_div.find_element(By.CLASS_NAME, "a-price-symbol")).get_attribute("textContent")
-        price_whole = (parent_div.find_element(By.CLASS_NAME, "a-price-whole")).get_attribute("textContent")
-        price_fraction = (parent_div.find_element(By.CLASS_NAME, "a-price-fraction")).get_attribute("textContent")
-        price = currency + price_whole + price_fraction
+        price = parent_div.find_element(By.CLASS_NAME, "a-offscreen").get_attribute("textContent")
+        # currency = (parent_div.find_element(By.CLASS_NAME, "a-price-symbol")).get_attribute("textContent")
+        # price_whole = (parent_div.find_element(By.CLASS_NAME, "a-price-whole")).get_attribute("textContent")
+        # price_fraction = (parent_div.find_element(By.CLASS_NAME, "a-price-fraction")).get_attribute("textContent")
+        # price = currency + price_whole + price_fraction
 
-    # if the above fails, try finding price for kindle books
+    # if the above fails, the product is probably a book; search for different IDs
     except NoSuchElementException:
         try:
             price = (driver.find_element(By.ID, "kindle-price")).get_attribute("textContent")   # kindle edition
@@ -103,6 +105,7 @@ def findProductPrice(driver):
         raise Exception
     
     finally:
+        price = price.strip()
         return price
 
 # find the product's name
@@ -113,18 +116,20 @@ def findProductName(driver):
     except:
         print("\nFailed to find the name of the product.\n")
         raise Exception
-    
-    return name
+    finally:
+        name = name.strip()
+        return name
 
 # find the product's availability (in stock, or out of stock)
 def findProductAvailability(driver):
     availability = "unknown"
     try:
-        availability = (driver.find_element(By.ID, "availability")).text
+        availability = (driver.find_element(By.ID, "availability")).get_attribute("textContent")
     except:
         print("\nFailed to find the availability for the product.\n")
-
-    return availability
+    finally:
+        availability = availability.strip()
+        return availability
 
 # Run the main function if file is not imported as module
 if __name__=="__main__":
