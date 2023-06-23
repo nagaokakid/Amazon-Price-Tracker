@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
-import time
 import sys
 from product import Product
 
@@ -76,7 +75,6 @@ def scrapeProductInfo(driver):
     # failed to find all product details; throw exception
     except:
         print("\nCould NOT find the name and/or price for the product. The product will not be added to the tracking list. Please try again with a different URL.\n")
-        raise Exception
 
     return string_tuple
 
@@ -98,6 +96,7 @@ def findProductPrice(driver):
             price = (driver.find_element(By.ID, "kindle-price")).get_attribute("textContent")   # kindle edition
         except:
             price = (driver.find_element(By.ID, "price")).get_attribute("textContent")  # paperback
+            raise Exception
     
     # all attempts to find price have failed; throw exception
     except Exception:
