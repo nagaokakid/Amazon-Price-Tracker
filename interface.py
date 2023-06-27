@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 
+# set color theme
 sg.theme('BlueMono')
 
 # Track a product
@@ -14,18 +15,25 @@ list_header = [sg.Text('\n\nView All Tracked Products', font=("Default", 12, "bo
 list_button = [sg.Button('Go', key='-GO-')]
 list_layout = [list_header, list_button]
 
-# The whole layout for the window
-layout = [track_layout, list_layout]
+# entire layout for the window
+layout_main = [track_layout, list_layout]
 
-window = sg.Window('Amazon Price Tracker', layout)
+# open the window and give it a title
+window_main = sg.Window('Amazon Price Tracker', layout_main, finalize=True)
+window_tracked_products = None
 
-while True:  # Event Loop
-    event, values = window.read()
+# event loop
+while True:
+    window, event, values = sg.read_all_windows()
     print(event, values)
     if event == sg.WIN_CLOSED:
-        break
-    if event == 'Show':
-        # Update the "output" text element to be the value of "input" element
-        window['-OUTPUT-'].update(values['-IN-'])
+        window.close()
 
-window.close()
+        if window == window_tracked_products:   # Second window is closed, so mark as closed
+            window_tracked_products = None
+        elif window == window_main:             # First window is closed, so end program
+            break
+
+    elif event == '-GO-':                       # Open a new window to show all tracked products
+        layout_tracked_products = [[sg.Text('Products')]]
+        window = sg.Window('All Tracked Products', layout_tracked_products, finalize=True)
