@@ -42,20 +42,10 @@ def createWebDriver():
 def navigateToURL(driver, url):
     driver.get(url)
 
-# User CLI
-def runInterface():
-    print("\nWelcome to Amazon Price Tracker!\n")
-    print("\nEnter 'o' to see the options menu\n")
+# scrape the amazon URL for product details, then create a product object with corresponding details
+def createProduct(driver):
     
-    while True:
-        input = sys.stdin()
-
-        if (input == "o"):
-            print("\n|-------------------------------------------------- OPTIONS --------------------------------------------------|\n")
-            print("1) Enter 'list' to see the list of all products currently being tracked\n")
-            print("2) Enter 'new [URL]' to start tracking a product (i.e.: 'new https://www.amazon.ca/fire-tv-40-inch)\n")
-            print("3) Enter 'remove [list number]' to remove a product from the list of tracked products\n")
-            print("4) Enter 'exit' to close the program\n")
+    return Product
 
 # search through the html DOM and extract product information
 def findProductInfo(driver):
