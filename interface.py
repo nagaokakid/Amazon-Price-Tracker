@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 
 # return main window (tracking a new product and button to see all tracked products)
-def createMainWindow():
+def createPrimaryWindow():
     # Track a product
     track_header = [sg.Text('Track a Product', font=("Default", 12, "bold"), justification='left')]
     track_title = [sg.Text('Enter the URL for a product to track its price:', key='-OUT-')]
@@ -19,13 +19,14 @@ def createMainWindow():
 
     return sg.Window('Amazon Price Tracker', layout_main, finalize=True)
 
+
 # open main window and poll for events
 def runEventLoop():
     # set color scheme
     sg.theme('BlueMono')
 
     # open the main window and set secondary window to null
-    window_main = createMainWindow()
+    window_main = createPrimaryWindow()
     window_tracked_products = None
 
     # event loop
@@ -43,5 +44,6 @@ def runEventLoop():
         elif event == '-GO-':                       # Open a new window on button press to show all tracked products
             layout_tracked_products = [[sg.Text('Products')]]
             window = sg.Window('All Tracked Products', layout_tracked_products, finalize=True)
+
 
 runEventLoop()
