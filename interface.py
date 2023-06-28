@@ -4,10 +4,9 @@ import PySimpleGUI as sg
 def createPrimaryWindow():
     # Track a product
     track_header = [sg.Text('Track a Product', font=("Default", 12, "bold"), justification='left')]
-    track_title = [sg.Text('Enter the URL for a product to track its price:', key='-OUT-')]
-    track_input = [sg.Input(key='-IN-')]
+    track_title = [sg.Text('Enter the URL:', key='-OUT-'), sg.InputText()]
     track_button = [sg.Button('Add', key='-ADD-')]
-    track_layout = [track_header, track_title, track_input, track_button]
+    track_layout = [track_header, track_title, track_button]
 
     # Look at existing tracked products
     list_header = [sg.Text('\n\nView All Tracked Products', font=("Default", 12, "bold"), justification='left')]
@@ -40,6 +39,9 @@ def runEventLoop():
                 window_tracked_products = None
             elif window == window_main:             # First window is closed, so end program
                 break
+        
+        elif event == '-ADD-':
+            print(values[0])
 
         elif event == '-GO-':                       # Open a new window on button press to show all tracked products
             layout_tracked_products = [[sg.Text('Products')]]
