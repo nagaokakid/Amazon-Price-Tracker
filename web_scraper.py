@@ -8,11 +8,11 @@ import sys
 from product import Product
 
 # Main function
-def main():
+def scrapeProduct():
     driver = createWebDriver()
     url = "https://www.amazon.ca/TRESemm%C3%A9-Botanique-Replenish-formulated-TechnologyTM/dp/B0BS763BBP/ref=sr_1_5?keywords=shampoo&qid=1687395876&sr=8-5"
     navigateToURL(driver, url)
-    product_tuple = scrapeProductInfo(driver)   # tuple of strings about product info (name, price, availability)
+    product_tuple = findProductInfo(driver)   # tuple of strings about product info (name, price, availability)
     product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
     print(product_obj)
 
@@ -58,7 +58,7 @@ def runInterface():
             print("4) Enter 'exit' to close the program\n")
 
 # search through the html DOM and extract product information
-def scrapeProductInfo(driver):
+def findProductInfo(driver):
     try:
 
         # get the name
@@ -129,7 +129,3 @@ def findProductAvailability(driver):
     finally:
         availability = availability.strip()
         return availability
-
-# Run the main function if file is not imported as module
-if __name__=="__main__":
-    main()
