@@ -43,9 +43,11 @@ def navigateToURL(driver, url):
     driver.get(url)
 
 # scrape the amazon URL for product details, then create a product object with corresponding details
-def createProduct(driver):
-    
-    return Product
+def createProduct(driver, url):
+    navigateToURL(driver)
+    product_tuple = findProductInfo(driver)   # tuple of strings about product info (name, price, availability)
+    product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
+    return product_obj
 
 # search through the html DOM and extract product information
 def findProductInfo(driver):
