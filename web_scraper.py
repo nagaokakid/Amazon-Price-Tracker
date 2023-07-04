@@ -7,20 +7,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 import sys
 from product import Product
 
-# Main function
-def scrapeProduct():
-    driver = createWebDriver()
-    url = "https://www.amazon.ca/TRESemm%C3%A9-Botanique-Replenish-formulated-TechnologyTM/dp/B0BS763BBP/ref=sr_1_5?keywords=shampoo&qid=1687395876&sr=8-5"
-    navigateToURL(driver, url)
-    product_tuple = findProductInfo(driver)   # tuple of strings about product info (name, price, availability)
-    product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
-    print(product_obj)
-
-    # page_html = (driver.page_source).encode("utf-8", "ignore")
-
-    # quit web driver
-    driver.quit()
-
 # Initialize options and service for chrome web driver, and then create it
 def createWebDriver():
     options = Options()
@@ -38,13 +24,18 @@ def createWebDriver():
     driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
     return driver
 
+# close web driver when done with use
+def closeWebDriver(driver):
+    driver.quit()
+
 # Go to URL in browser
 def navigateToURL(driver, url):
     driver.get(url)
 
-# scrape the amazon URL for product details, then create a product object with corresponding details
-def createProduct(driver, url):
-    navigateToURL(driver)
+# scrape the web page of the given URL, then create a product object with corresponding details
+def createProduct(url):
+    driver = createWebDriver()
+    navigateToURL(driver, url)
     product_tuple = findProductInfo(driver)   # tuple of strings about product info (name, price, availability)
     product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
     return product_obj
