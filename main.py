@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import web_scraper as ws
 
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
@@ -28,24 +29,34 @@ def runEventLoop():
     window_main = createPrimaryWindow()
     window_tracked_products = None
 
-    # event loop
-    while True:
-        window, event, values = sg.read_all_windows()
-        print(event, values)
-        if event == sg.WIN_CLOSED:
-            window.close()
+    try:
+        driver = ws.createWebDriver()
 
-            if window == window_tracked_products:   # Second window is closed, so mark as closed
-                window_tracked_products = None
-            elif window == window_main:             # First window is closed, so end program
-                break
-        
-        elif event == '-ADD-':
-            print(values[0])
+        # event loop
+        while True:
+            window, event, values = sg.read_all_windows()
 
-        elif event == '-GO-':                       # Open a new window on button press to show all tracked products
-            layout_tracked_products = [[sg.Text('Products')]]
-            window = sg.Window('All Tracked Products', layout_tracked_products, finalize=True)
+            # Window has been closed
+            if event == sg.WIN_CLOSED:
+                window.close()
 
+                if window == window_tracked_products:   # Second window is closed, so mark as closed
+                    window_tracked_products = None
+                elif window == window_main:             # First window is closed, so end program
+                    ws.closeWebDriver()
+                    break
+            
+            # Add a new product to the tracking list
+            elif event == '-ADD-':
+                product = ws.createProduct(driver, values[0])       # Get a product object back
+                # database_manager.insert
+
+            # Open new window and show all tracked products
+            elif event == '-GO-':
+                layout_tracked_products = [[sg.Text('Products')]]
+                window = sg.Window('All Tracked Products', layout_tracked_products, finalize=True)
+
+    except:
+        pass
 
 runEventLoop()

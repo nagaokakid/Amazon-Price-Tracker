@@ -33,8 +33,7 @@ def navigateToURL(driver, url):
     driver.get(url)
 
 # scrape the web page of the given URL, then create a product object with corresponding details
-def createProduct(url):
-    driver = createWebDriver()
+def createProduct(driver, url):
     navigateToURL(driver, url)
     product_tuple = findProductInfo(driver)   # tuple of strings about product info (name, price, availability)
     product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
