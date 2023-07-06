@@ -1,7 +1,8 @@
 import PySimpleGUI as sg
 import sys
 sys.path.append("./logic")
-import web_scraper as ws
+from logic import web_scraper as ws
+from logic import database_manager as dbm
 
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
@@ -49,12 +50,12 @@ def runEventLoop():
                         window_tracked_products = None
                     elif window == window_main:             # First window is closed, so end program
                         ws.closeWebDriver()
-                        break
+                        sys.exit(0)
                 
                 # Add a new product to the tracking list
                 elif event == '-ADD-':
                     product = ws.createProduct(driver, values[0])       # Get a product object back
-                    # database_manager.insert(product)
+                    dbm.insert(product)
 
                 # Open new window and show all tracked products
                 elif event == '-GO-':
