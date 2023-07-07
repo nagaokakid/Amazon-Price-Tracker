@@ -3,6 +3,7 @@ import sys
 sys.path.append("./logic")
 from logic import web_scraper as ws
 from logic import database_manager as dbm
+import traceback
 
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
@@ -44,13 +45,14 @@ def runEventLoop():
 
                 # Window has been closed
                 if event == sg.WIN_CLOSED:
-                    window.close()
-
+                    
+                    if window:
+                        window.close()
                     if window == window_tracked_products:   # Second window is closed, so mark as closed
                         window_tracked_products = None
                     elif window == window_main:             # First window is closed, so end program
-                        ws.closeWebDriver()
-                        sys.exit(0)
+                        ws.closeWebDriver(driver)
+                        sys.exit()
                 
                 # Add a new product to the tracking list
                 elif event == '-ADD-':
@@ -62,7 +64,7 @@ def runEventLoop():
                     layout_tracked_products = [[sg.Text('Products')]]
                     window = sg.Window('All Tracked Products', layout_tracked_products, finalize=True)
             except:
-                pass
+                traceback.print_exc()
     except:
         pass
 

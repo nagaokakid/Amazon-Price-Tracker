@@ -2,16 +2,15 @@ import json
 import product
 import os.path
 
-save_path = "../data"
-file_name = "products.json"
+# save_path = "../data"
+# file_name = "products.json"
 
-complete_name = os.path.join(save_path, file_name)
+# complete_name = os.path.join(save_path, file_name)
 
 def insert(product):
-    all_products = []
 
-    with open(complete_name, "w") as file:
-        all_products = json.load(file)      # read file and store current contents in temp variable
+    with open("./data/products.json", "r+") as file:
+        all_products = json.loads(file.read())      # read file and load current JSON contents in temp variable
     
         new_product = {"name": product.getName(), "start_price": product.getStartPrice(), "current_price": product.getCurrentPrice(),
                     "previous_price": product.getPreviousPrice(), "availability": product.getAvailability(),
@@ -22,4 +21,4 @@ def insert(product):
     
         all_products["products"].append(new_product)    # add new product to product list
 
-        json.dump(all_products, file, indent = 4)   # write to file using altered product list
+        json.dump(all_products, file, indent = 4)   # write changes to JSON file
