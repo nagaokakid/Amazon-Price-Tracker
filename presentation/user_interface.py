@@ -90,9 +90,10 @@ def runEventLoop():
                     product = ws.createProduct(driver, values[0])       # Get a product object back
                     dbm.insert(product)
 
-                # Open new window and show all tracked products
+                # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
-                    window_tracked_products = createSecondaryWindow()
+                    if window_tracked_products is None:
+                        window_tracked_products = createSecondaryWindow()
             except:
                 raise Exception
     except:
