@@ -1,11 +1,4 @@
 import json
-import product
-import os.path
-
-# save_path = "../data"
-# file_name = "products.json"
-
-# complete_name = os.path.join(save_path, file_name)
 
 def insert(product):
 

@@ -1,15 +1,9 @@
 import PySimpleGUI as sg
-import sys
-import os
 import json
 
-# add logic directory to system path for import
-parent_dir = os.path.dirname(os.getcwd())
-import_path = parent_dir + "\\" + "logic"
-sys.path.append(import_path)
-
-import database_manager as dbm
-import web_scraper as ws
+from logic import database_manager as dbm
+from logic import web_scraper as ws
+from logic import exception
 
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
@@ -29,31 +23,30 @@ def createPrimaryWindow():
 
     return sg.Window('Amazon Price Tracker', layout_main, finalize=True)
 
-
+# return window for all tracked products
 def createSecondaryWindow():
     products_title = [sg.Text('All Tracked Products', font=("Default", 12, "bold"), justification='left')]
     products_button = [sg.Button("Refresh", key='-REFRESH-')]
     
-    products_list = generateProductsList()
+    products = generateProductsList()
     column = []
 
-    for product in products_list:
-        column.append([sg.Text(product.getName())])
+    for product in products:
+        column.append([sg.Text(product["name"]), sg.Text(product["is_lower_price"]), 
+                       sg.Text(product["current_price"])])
 
-    column_layout = [sg.Column(layout=column, scrollable=True, vertical_scroll_only=True)]
-    products_layout = [products_title, products_button, column_layout]
+    layout = [products_title, products_button, column]
 
-    return sg.Window('Tracking List', products_layout, finalize=True)
+    return sg.Window('Tracking List', layout, finalize=True)
 
-
+# return a list of all tracked products within JSON file
 def generateProductsList():
-    products_dict = None
+    products_dict = {} # init as None?
 
-    with open("../data/products.json", "r") as file:
+    with open("./data/products.json", "r") as file:
         products_dict = json.loads(file.read())
 
     return products_dict["products"]    # return list of product items
-
 
 # open main window and poll for events
 def runEventLoop():
@@ -79,24 +72,34 @@ def runEventLoop():
                     
                     if window:
                         window.close()
+                    
                     if window == window_tracked_products:   # Second window is closed, so mark as closed
                         window_tracked_products = None
                     elif window == window_main:             # First window is closed, so end program
                         ws.closeWebDriver(driver)
-                        sys.exit()
+                        break
                 
                 # Add a new product to the tracking list
                 elif event == '-ADD-':
-                    product = ws.createProduct(driver, values[0])       # Get a product object back
-                    dbm.insert(product)
+                    if values[0] != "":
+                        product = ws.createProduct(driver, values[0]) # create product with URL (values[0])
+                        dbm.insert(product)
 
                 # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
                     if window_tracked_products is None:
                         window_tracked_products = createSecondaryWindow()
-            except:
-                raise Exception
+                
+                # Imitate refresh; close window, re-read JSON file, and display all products
+                elif event == '-REFRESH-':
+                    window.close()
+                    window_tracked_products = createSecondaryWindow()
+            except Exception as e:
+                if e is exception.NoProductPriceFound:
+                    pass
+                elif e is exception.NoProductNameFound:
+                    pass
+                else:
+                    pass
     except:
         raise Exception
-
-runEventLoop()
