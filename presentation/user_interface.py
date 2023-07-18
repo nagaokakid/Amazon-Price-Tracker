@@ -9,9 +9,10 @@ from logic import exception
 def createPrimaryWindow():
     # Track a product
     track_title = [sg.Text('Track a Product', font=("Default", 12, "bold"), justification='left')]
-    track_text = [sg.Text('Enter the URL:', key='-OUT-'), sg.InputText()]
+    track_input = [sg.Text('Enter the URL:', key='-OUT-'), sg.InputText()]
     track_button = [sg.Button('Add', key='-ADD-')]
-    track_layout = [track_title, track_text, track_button]
+    track_error_msg = [sg.Text('', key="-ERROR-", text_color='Red')]
+    track_layout = [track_title, track_input, track_button]
 
     # Look at existing tracked products
     list_header = [sg.Text('\n\nView All Tracked Products', font=("Default", 12, "bold"), justification='left')]
@@ -77,6 +78,7 @@ def runEventLoop():
                     if values[0] != "":
                         product = ws.createProduct(driver, values[0]) # create product with URL (values[0])
                         dbm.insertProduct(product)
+                        window['-ERROR-'].update('')
 
                 # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
@@ -90,10 +92,10 @@ def runEventLoop():
 
             except Exception as e:
                 if e is exception.NoProductPriceFound:      # TO-DO ----------------------
-                    pass
+                    window['-ERROR-'].update('ERROR: The price of the product could not be found.')
                 elif e is exception.NoProductNameFound:
-                    pass
+                    window['-ERROR-'].update('ERROR: The name of the product could not be found.')
                 else:
                     pass
     except:
-        raise Exception # to be removed
+        raise Exception # TO DO ------------------
