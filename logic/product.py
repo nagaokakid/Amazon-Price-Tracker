@@ -9,7 +9,7 @@ class Product:
         self.current_price = None
         self.previous_price = None
         self.availability = None
-        self.creation_date = datetime.now()
+        self.creation_date = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
         self.last_update = self.creation_date
         self.is_lower_price = False
     def __init__(self, name, price, availability):
@@ -18,7 +18,7 @@ class Product:
         self.current_price = price
         self.previous_price = price
         self.availability = availability
-        self.creation_date = datetime.now()
+        self.creation_date = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
         self.last_update = self.creation_date
         self.is_lower_price = False
 
