@@ -1,9 +1,9 @@
 import PySimpleGUI as sg
 import json
-
 from logic import database_manager as dbm
 from logic import web_scraper as ws
 from logic import exception
+
 
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
@@ -23,30 +23,23 @@ def createPrimaryWindow():
 
     return sg.Window('Amazon Price Tracker', layout_main, finalize=True)
 
+
 # return window for all tracked products
 def createSecondaryWindow():
     products_title = [sg.Text('All Tracked Products', font=("Default", 12, "bold"), justification='left')]
     products_button = [sg.Button("Refresh", key='-REFRESH-')]
     
-    products = generateProductsList()
+    products = dbm.getAllProducts()
     column = []
 
     for product in products:
-        column.append([sg.Text(product["name"]), sg.Text(product["is_lower_price"]), 
+        column.append([sg.Text(product["name"] + "\n"), sg.Text(product["is_lower_price"]), 
                        sg.Text(product["current_price"])])
 
     layout = [products_title, products_button, column]
 
     return sg.Window('Tracking List', layout, finalize=True)
 
-# return a list of all tracked products within JSON file
-def generateProductsList():
-    products_dict = {} # init as None?
-
-    with open("./data/products.json", "r") as file:
-        products_dict = json.loads(file.read())
-
-    return products_dict["products"]    # return list of product items
 
 # open main window and poll for events
 def runEventLoop():
@@ -83,23 +76,24 @@ def runEventLoop():
                 elif event == '-ADD-':
                     if values[0] != "":
                         product = ws.createProduct(driver, values[0]) # create product with URL (values[0])
-                        dbm.insert(product)
+                        dbm.insertProduct(product)
 
                 # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
                     if window_tracked_products is None:
                         window_tracked_products = createSecondaryWindow()
                 
-                # Imitate refresh; close window, re-read JSON file, and display all products
+                # Imitate refresh; close window, re-read JSON file, and show all products
                 elif event == '-REFRESH-':
                     window.close()
                     window_tracked_products = createSecondaryWindow()
+
             except Exception as e:
-                if e is exception.NoProductPriceFound:
+                if e is exception.NoProductPriceFound:      # TO-DO ----------------------
                     pass
                 elif e is exception.NoProductNameFound:
                     pass
                 else:
                     pass
     except:
-        raise Exception
+        raise Exception # to be removed
