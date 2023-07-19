@@ -1,17 +1,17 @@
 import PySimpleGUI as sg
-import json
 from logic import database_manager as dbm
 from logic import web_scraper as ws
-from logic import exception
+from logic.exception import *
 
 
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
     # Track a product
     track_title = [sg.Text('Track a Product', font=("Default", 12, "bold"), justification='left')]
-    track_text = [sg.Text('Enter the URL:', key='-OUT-'), sg.InputText()]
+    track_input = [sg.Text('Enter the URL:', key='-OUT-'), sg.InputText()]
     track_button = [sg.Button('Add', key='-ADD-')]
-    track_layout = [track_title, track_text, track_button]
+    track_error_msg = [sg.Text('', key="-ERROR-", text_color='Red')]
+    track_layout = [track_title, track_input, track_button, track_error_msg]
 
     # Look at existing tracked products
     list_header = [sg.Text('\n\nView All Tracked Products', font=("Default", 12, "bold"), justification='left')]
@@ -33,7 +33,7 @@ def createSecondaryWindow():
     column = []
 
     for product in products:
-        column.append([sg.Text(product["name"] + "\n"), sg.Text(product["is_lower_price"]), 
+        column.append([sg.Text(product["name"]), sg.Text(product["is_lower_price"]), 
                        sg.Text(product["current_price"])])
 
     layout = [products_title, products_button, column]
@@ -75,8 +75,12 @@ def runEventLoop():
                 # Add a new product to the tracking list
                 elif event == '-ADD-':
                     if values[0] != "":
+                        window['-ERROR-'].update('')
+                        window['-ERROR-'].update(text_color='Red')
                         product = ws.createProduct(driver, values[0]) # create product with URL (values[0])
                         dbm.insertProduct(product)
+                        window['-ERROR-'].update(text_color='Green')
+                        window['-ERROR-'].update('The product has been added to your tracking list.')
 
                 # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
@@ -88,12 +92,14 @@ def runEventLoop():
                     window.close()
                     window_tracked_products = createSecondaryWindow()
 
-            except Exception as e:
-                if e is exception.NoProductPriceFound:      # TO-DO ----------------------
-                    pass
-                elif e is exception.NoProductNameFound:
-                    pass
-                else:
-                    pass
-    except:
-        raise Exception # to be removed
+            except NoProductPriceFound:
+                window['-ERROR-'].update('ERROR: The price of the product could not be found.')
+            except NoProductNameFound:
+                window['-ERROR-'].update('ERROR: The name of the product could not be found.')
+            except InvalidUrl:
+                window['-ERROR-'].update('ERROR: Invalid URL provided.')
+            except Exception:
+                pass
+
+    except Exception as e:
+        raise e

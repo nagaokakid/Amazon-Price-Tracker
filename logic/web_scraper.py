@@ -4,8 +4,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
-from logic import product
-from logic import exception
+from logic.product import *
+from logic.exception import *
 
 # Initialize options and service for chrome web driver, and then create it
 def createWebDriver():
@@ -30,14 +30,17 @@ def closeWebDriver(driver):
 
 # Go to URL in browser
 def navigateToURL(driver, url):
-    driver.get(url)
+    try:
+        driver.get(url)
+    except:
+        raise InvalidUrl
 
 # scrape the web page of the given URL, then create a product object with corresponding details
 def createProduct(driver, url):
     try:
         navigateToURL(driver, url)
         product_tuple = findProductInfo(driver)   # tuple of strings about product info (name, price, availability)
-        product_obj = product.Product(product_tuple[0], product_tuple[1], product_tuple[2])     # create new Product object using tuple
+        product_obj = Product(product_tuple[0], product_tuple[1], product_tuple[2], url)     # create new Product object using tuple
     except Exception as e:
         raise e
     
@@ -55,14 +58,13 @@ def findProductInfo(driver):
         # get the availability
         availability = findProductAvailability(driver)
         
-        string_tuple = (name, price, availability)
+        product_tuple = (name, price, availability)
 
-    # failed to find all product details; throw exception
+    # failed to find every required product detail; throw exception
     except Exception as e:
-        print("\nMissing information. The product will not be added to the tracking list. Please try again with a different URL.\n")
         raise e
 
-    return string_tuple
+    return product_tuple
 
 # find the product's price
 def findProductPrice(driver):
@@ -97,8 +99,7 @@ def findProductPrice(driver):
         price = (driver.find_element(By.ID, "price")).get_attribute("textContent")  # paperback
         return price.strip()
     except:
-        print("\nFailed to find the price of the product.\n")
-        raise exception.NoProductPriceFound
+        raise NoProductPriceFound
 
 
 # find the product's name
@@ -109,8 +110,7 @@ def findProductName(driver):
         name = (driver.find_element(By.ID, "productTitle")).text
         return name.strip()
     except:
-        print("\nFailed to find the name of the product.\n")
-        raise exception.NoProductNameFound
+        raise NoProductNameFound
 
 
 # find the product's availability (in stock, or out of stock)
@@ -121,6 +121,6 @@ def findProductAvailability(driver):
         availability = (driver.find_element(By.ID, "availability")).get_attribute("textContent")
         availability = availability.strip()
     except:
-        print("\nFailed to find the availability for the product.\n")
+        pass
     
     return availability

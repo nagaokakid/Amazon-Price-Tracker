@@ -5,3 +5,7 @@ class NoProductPriceFound(Exception):
 class NoProductNameFound(Exception):
     "Raised when the name of a product could not be found."
     pass
+
+class InvalidUrl(Exception):
+    "Raised when a given URL is not a valid web page"
+    pass
