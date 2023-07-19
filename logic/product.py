@@ -1,7 +1,7 @@
 from datetime import datetime
 
-class Product:
 
+class Product:
     # Constructors
     def __init__(self):
         self.name = None
@@ -12,7 +12,8 @@ class Product:
         self.creation_date = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
         self.last_update = self.creation_date
         self.is_lower_price = False
-    def __init__(self, name, price, availability):
+        self.url = None
+    def __init__(self, name, price, availability, url):
         self.name = name
         self.start_price = price
         self.current_price = price
@@ -21,6 +22,7 @@ class Product:
         self.creation_date = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
         self.last_update = self.creation_date
         self.is_lower_price = False
+        self.url = url
 
     def __str__(self):
         return f"\n{self.name} + {self.current_price} + {self.availability}\n"
@@ -42,6 +44,8 @@ class Product:
         self.last_update = date
     def setIsLowerPrice(self, bool):
         self.is_lower_price = bool
+    def setUrl(self, url):
+        self.url = url
     
     # Get methods
     def getName(self):
@@ -60,4 +64,5 @@ class Product:
         return self.last_update
     def getIsLowerPrice(self):
         return self.is_lower_price
-    
+    def getUrl(self):
+        return self.url

@@ -10,7 +10,7 @@ def insertProduct(product):
         new_product = {"name": product.getName(), "start_price": product.getStartPrice(), "current_price": product.getCurrentPrice(),
                     "previous_price": product.getPreviousPrice(), "availability": product.getAvailability(),
                     "creation_date": product.getCreationDate(), "last_update": product.getLastUpdate(),
-                    "is_lower_price": product.getIsLowerPrice()}        # create a dictionary for new product
+                    "is_lower_price": product.getIsLowerPrice(), "url": product.getUrl()}        # create a dictionary for new product
         
         file.seek(0)    # go to beginning of file
     
