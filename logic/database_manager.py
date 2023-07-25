@@ -29,6 +29,7 @@ def checkProduct(url, all_products):
     for product in all_products:
         if product["url"] == url:
             isInDatabase = True
+            break
 
     return isInDatabase
 
