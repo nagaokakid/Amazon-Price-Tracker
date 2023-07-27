@@ -1,3 +1,15 @@
 {
-    "products": []
+    "products": [
+        {
+            "name": "TAGRY Bluetooth Headphones 60H Playback True Wireless Earbuds LED Power Display Earphones with Wireless Charging Case IPX5 Waterproof in-Ear Earbuds with Mic for TV Smart Phone Laptop Sports",
+            "start_price": "$39.99",
+            "current_price": "$39.99",
+            "previous_price": "$39.99",
+            "availability": "In Stock",
+            "creation_date": "25/07/2023 17:33:06",
+            "last_update": "25/07/2023 17:33:06",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/dp/B0B2RGW5SW?ref_=Oct_DLandingS_D_b30b9869_NA&th=1"
+        }
+    ]
 }

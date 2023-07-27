@@ -7,14 +7,14 @@ from logic.exception import *
 # return main window (tracking a new product and button to see all tracked products)
 def createPrimaryWindow():
     # Track a product
-    track_title = [sg.Text('Track a Product', font=("Default", 12, "bold"), justification='left')]
+    track_title = [sg.Text('Track a Product', font=("Default", 14, "bold"), justification='left')]
     track_input = [sg.Text('Enter the URL:', key='-OUT-'), sg.InputText()]
     track_button = [sg.Button('Add', key='-ADD-')]
     track_error_msg = [sg.Text('', key="-ERROR-", text_color='Red')]
     track_layout = [track_title, track_input, track_button, track_error_msg]
 
     # Look at existing tracked products
-    list_header = [sg.Text('\n\nView All Tracked Products', font=("Default", 12, "bold"), justification='left')]
+    list_header = [sg.Text('\nView All Tracked Products', font=("Default", 14, "bold"), justification='left')]
     list_button = [sg.Button('Go', key='-GO-')]
     list_layout = [list_header, list_button]
 
@@ -26,19 +26,39 @@ def createPrimaryWindow():
 
 # return window for all tracked products
 def createSecondaryWindow():
-    products_title = [sg.Text('All Tracked Products', font=("Default", 12, "bold"), justification='left')]
+    # header info
+    products_title = [sg.Text('All Tracked Products', font=("Default", 14, "bold"), justification='left')]
     products_button = [sg.Button("Refresh", key='-REFRESH-')]
-    
+
+    new_line = [sg.Text("\n")]
+
+    # all product objects from JSON file
     products = dbm.getAllProducts()
-    column = []
+
+    table_entries = []
 
     for product in products:
-        column.append([sg.Text(product["name"]), sg.Text(product["is_lower_price"]), 
-                       sg.Text(product["current_price"])])
+        name = product["name"]
+        price = product["current_price"]
+        bool = product["is_lower_price"]
 
-    layout = [products_title, products_button, column]
+        if len(name) > 82:
+            name = name[0:79] + "..."
+        if bool is True:
+            bool = "Yes"
+        elif bool is False:
+            bool = "No"
 
-    return sg.Window('Tracking List', layout, finalize=True)
+        table_entries.append([name, price, bool])
+
+    max_rows = len(table_entries)
+
+    table = [sg.Table(table_entries, headings=["Name", "Current Price", "Reduced"], auto_size_columns=False, 
+                      col_widths=[60, 12, 8], num_rows=max_rows, justification="center")]
+    
+    layout = [[products_title, products_button], [new_line], [table]]
+
+    return sg.Window('Tracking List', layout, finalize=True, resizable=True)
 
 
 # open main window and poll for events
