@@ -1,3 +1,37 @@
 {
-    "products": []
+    "products": [
+        {
+            "name": "TAGRY Bluetooth Headphones 60H Playback True Wireless Earbuds LED Power Display Earphones with Wireless Charging Case IPX5 Waterproof in-Ear Earbuds with Mic for TV Smart Phone Laptop Sports",
+            "start_price": "$39.99",
+            "current_price": "$39.99",
+            "previous_price": "$39.99",
+            "availability": "In Stock",
+            "creation_date": "25/07/2023 17:33:06",
+            "last_update": "25/07/2023 17:33:06",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/dp/B0B2RGW5SW?ref_=Oct_DLandingS_D_b30b9869_NA&th=1"
+        },
+        {
+            "name": "Sopranos: The Complete Series (RPKG) (BD) [Blu-ray]",
+            "start_price": "$122.55",
+            "current_price": "$122.55",
+            "previous_price": "$122.55",
+            "availability": "In Stock",
+            "creation_date": "31/07/2023 16:19:55",
+            "last_update": "31/07/2023 16:19:55",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/Sopranos-Complete-RPKG-BD-Blu-ray/dp/B087SFKYZH/ref=tmm_blu_swatch_0?_encoding=UTF8&qid=1690838371&sr=8-2"
+        },
+        {
+            "name": "Owala FreeSip Insulated Stainless Steel Water Bottle with Straw for Sports and Travel, BPA-Free, 24oz, Dreamy Field",
+            "start_price": "$32.16",
+            "current_price": "$32.16",
+            "previous_price": "$32.16",
+            "availability": "In Stock",
+            "creation_date": "31/07/2023 16:23:27",
+            "last_update": "31/07/2023 16:23:27",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/Owala-FreeSip-Insulated-Stainless-BPA-Free/dp/B0C59BYVTQ/ref=zg_bs_c_sports_sccl_1/137-6463703-6972919?pd_rd_w=IdHGB&content-id=amzn1.sym.6f50da21-510d-4da6-9182-ff71d80f9354&pf_rd_p=6f50da21-510d-4da6-9182-ff71d80f9354&pf_rd_r=KGA11GFBHC9Q24J2YYPW&pd_rd_wg=kBMhK&pd_rd_r=a321b3c1-297f-4bad-bbc3-381958e19bed&pd_rd_i=B0C59BYVTQ&psc=1"
+        }
+    ]
 }
