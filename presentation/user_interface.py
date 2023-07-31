@@ -55,10 +55,12 @@ def createSecondaryWindow():
 
     table = [sg.Table(table_entries, headings=["Name", "Current Price", "Reduced"], auto_size_columns=False, 
                       col_widths=[60, 12, 8], num_rows=max_rows, justification="center")]
-    
-    layout = [[products_title, products_button], [new_line], [table]]
 
-    return sg.Window('Tracking List', layout, finalize=True, resizable=True)
+    delete_button = [sg.Button("Delete", key="-DELETE-")]
+    
+    layout = [[products_title, products_button], [new_line], [table], [delete_button]]
+
+    return sg.Window('Tracking List', layout, finalize=True)
 
 
 # open main window and poll for events
