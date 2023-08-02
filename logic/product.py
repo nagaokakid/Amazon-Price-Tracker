@@ -14,8 +14,8 @@ class Product:
         self.last_update = self.creation_date
         self.is_lower_price = False
         self.url = None
-    def __init__(self, id, name, price, availability, url):
-        self.id = id
+    def __init__(self, name, price, availability, url):
+        self.id = 0
         self.name = name
         self.start_price = price
         self.current_price = price
