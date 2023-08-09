@@ -1,10 +1,11 @@
 import PySimpleGUI as sg
-from logic import database_manager as dbm
-from logic import web_scraper as ws
+import logic.database_manager as dbm
+import logic.web_scraper as ws
 from logic.exception import *
+import logic.product_updater as pu
+from datetime import datetime
 
-
-# return main window (tracking a new product and button to see all tracked products)
+# return main window (tracking a new product)
 def createPrimaryWindow():
     # Track a product
     track_title = [sg.Text('Track a Product', font=("Default", 14, "bold"), justification='left')]
@@ -24,7 +25,7 @@ def createPrimaryWindow():
     return sg.Window('Amazon Price Tracker', layout_main, finalize=True)
 
 
-# return window for all tracked products
+# return second window (all tracked products)
 def createSecondaryWindow():
     # header info
     products_title = [sg.Text('All Tracked Products', font=("Default", 14, "bold"), justification='left')]
@@ -63,12 +64,33 @@ def createSecondaryWindow():
     return sg.Window('Tracking List', layout, finalize=True)
 
 
+# update all products every hour
+def checkUpdateInterval(driver, time_stamp):
+    curr_time_stamp = getCurrentTimeAsInteger()
+
+    if curr_time_stamp - time_stamp > 3600:
+        pu.updateProducts(driver)
+        return curr_time_stamp
+
+    return time_stamp
+
+# get current time as number of seconds
+def getCurrentTimeAsInteger():
+    curr_time = datetime.now()
+    curr_time_stamp = int(round(curr_time.timestamp()))
+
+    return curr_time_stamp
+
+
 # open main window and poll for events
 def runEventLoop():
 
     try:
         # init web driver
         driver = ws.createWebDriver()
+
+        # update all product prices
+        pu.updateProducts(driver)
 
         # set color scheme
         sg.theme('BlueMono')
@@ -77,9 +99,12 @@ def runEventLoop():
         window_main = createPrimaryWindow()
         window_tracked_products = None
 
+        time = getCurrentTimeAsInteger()
+
         # event loop
         while True:
             try:
+                time = checkUpdateInterval(driver, time)
                 window, event, values = sg.read_all_windows()
 
                 # Window has been closed
