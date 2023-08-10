@@ -14,19 +14,19 @@
         {
             "name": "Sopranos: The Complete Series (RPKG) (BD) [Blu-ray]",
             "start_price": "$122.55",
-            "current_price": "$122.55",
+            "current_price": "$104.22",
             "previous_price": "$122.55",
             "availability": "In Stock",
             "creation_date": "31/07/2023 16:19:55",
             "last_update": "31/07/2023 16:19:55",
-            "is_lower_price": false,
+            "is_lower_price": true,
             "url": "https://www.amazon.ca/Sopranos-Complete-RPKG-BD-Blu-ray/dp/B087SFKYZH/ref=tmm_blu_swatch_0?_encoding=UTF8&qid=1690838371&sr=8-2"
         },
         {
             "name": "Owala FreeSip Insulated Stainless Steel Water Bottle with Straw for Sports and Travel, BPA-Free, 24oz, Dreamy Field",
             "start_price": "$32.16",
-            "current_price": "32.09",
-            "previous_price": "123.47",
+            "current_price": "$32.06",
+            "previous_price": "$32.09",
             "availability": "In Stock",
             "creation_date": "31/07/2023 16:23:27",
             "last_update": "31/07/2023 16:23:27",
