@@ -4,6 +4,7 @@ from datetime import datetime
 class Product:
     # Constructors
     def __init__(self):
+        self.id = None
         self.name = None
         self.start_price = None
         self.current_price = None
@@ -14,6 +15,7 @@ class Product:
         self.is_lower_price = False
         self.url = None
     def __init__(self, name, price, availability, url):
+        self.id = 0
         self.name = name
         self.start_price = price
         self.current_price = price
@@ -28,6 +30,8 @@ class Product:
         return f"\n{self.name} + {self.current_price} + {self.availability}\n"
     
     # Set methods
+    def setId(self, id):
+        self.id = id
     def setName(self, name):
         self.name = name
     def setStartPrice(self, price):
@@ -48,6 +52,8 @@ class Product:
         self.url = url
     
     # Get methods
+    def getId(self):
+        return self.id
     def getName(self):
         return self.name
     def getStartPrice(self):
