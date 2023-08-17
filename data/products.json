@@ -2,27 +2,39 @@
     "products": [
         {
             "id": 1,
-            "name": "Bounty Select-A-Size Paper Towels, 8 Double Plus Rolls = 20 Regular Rolls, White",
-            "start_price": "$29.98",
-            "current_price": "$29.98",
-            "previous_price": "$29.98",
+            "name": "Mastery",
+            "start_price": "$34.00",
+            "current_price": "$34.00",
+            "previous_price": "$34.00",
             "availability": "In Stock",
-            "creation_date": "01/08/2023 22:24:26",
-            "last_update": "01/08/2023 22:24:26",
+            "creation_date": "16/08/2023 20:30:17",
+            "last_update": "16/08/2023 20:30:17",
             "is_lower_price": false,
-            "url": "https://www.amazon.ca/Bounty-Select-Towels-Double-Regular/dp/B0BQJY4Q8K/ref=zg_bs_g_hpc_sccl_3/137-6463703-6972919?th=1"
+            "url": "https://www.amazon.ca/Mastery-Robert-Greene/dp/014312417X"
         },
         {
             "id": 2,
-            "name": "Optimum Nutrition Gold Standard 100% Whey Protein Powder, Double Rich Chocolate, 5 Pound (Packaging May Vary)",
-            "start_price": "$116.80",
-            "current_price": "$116.80",
-            "previous_price": "$116.80",
+            "name": "Samsung LS27T350FHNXZA 27-inch Screen LED-Lit Monitor 5ms 75Hz Eye-Saver Mode with Freesync, Black (LF27T350FHNXZA)",
+            "start_price": "$188.00",
+            "current_price": "$188.00",
+            "previous_price": "$188.00",
             "availability": "In Stock",
-            "creation_date": "01/08/2023 22:25:16",
-            "last_update": "01/08/2023 22:25:16",
+            "creation_date": "16/08/2023 20:31:07",
+            "last_update": "16/08/2023 20:31:07",
             "is_lower_price": false,
-            "url": "https://www.amazon.ca/OPTIMUM-NUTRITION-STANDARD-Protein-Chocolate/dp/B000QSNYGI?ref_=Oct_d_obs_d_6369740011_2&pd_rd_w=QZWz5&content-id=amzn1.sym.40917b72-b081-4fdc-8cb3-d4969de74102&pf_rd_p=40917b72-b081-4fdc-8cb3-d4969de74102&pf_rd_r=E73240GM4BXCFK20QAZ4&pd_rd_wg=SRStV&pd_rd_r=92555b92-0dab-46b3-8f96-f87a60c813b9&pd_rd_i=B000QSNYGI"
+            "url": "https://www.amazon.ca/Samsung-LS27T350FHNXZA-Eye-Saver-Freesync-LF27T350FHNXZA/dp/B08FF3JQ28?ref_=Oct_DLandingS_D_3cfffce8_0&th=1"
+        },
+        {
+            "id": 3,
+            "name": "Lenovo ThinkCentre M900 SFF Desktop Computer, Intel Core i7-6700 Upto 4.0GHz, 32GB RAM, 1TB SSD, 4K 2-Monitor Support DisplayPort, HDMI, DVD-RW, AC Wi-Fi, Bluetooth, TDL - Windows 10 Pro (RENEWED)",
+            "start_price": "$339.00",
+            "current_price": "$339.00",
+            "previous_price": "$339.00",
+            "availability": "In Stock.",
+            "creation_date": "16/08/2023 20:34:03",
+            "last_update": "16/08/2023 20:34:03",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/Lenovo-ThinkCentre-M900-2-Monitor-DisplayPort/dp/B08CY7Q36R?ref_=Oct_d_obs_d_677250011_0&pd_rd_w=7kMPa&content-id=amzn1.sym.40917b72-b081-4fdc-8cb3-d4969de74102&pf_rd_p=40917b72-b081-4fdc-8cb3-d4969de74102&pf_rd_r=B69C5B71VSJJF2S5AFV2&pd_rd_wg=KcPeh&pd_rd_r=b66b17df-5e9d-4c21-98d6-1bb4c83e4493&pd_rd_i=B08CY7Q36R&th=1"
         }
     ]
 }

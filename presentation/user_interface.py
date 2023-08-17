@@ -26,7 +26,7 @@ def createPrimaryWindow():
 
 
 # return second window (all tracked products)
-def createSecondaryWindow():
+def createSecondaryWindow(table_entries):
     # header info
     products_title = [sg.Text('All Tracked Products', font=("Default", 14, "bold"), justification='left')]
     products_button = [sg.Button("Refresh", key='-REFRESH-')]
@@ -34,11 +34,46 @@ def createSecondaryWindow():
     new_line = [sg.Text("\n")]
 
     # all product objects from JSON file
-    products = dbm.getAllProducts()
+    # products = dbm.getAllProducts()
 
+    # table_entries = []
+
+    # for product in products:
+    #     id = product["id"]
+    #     name = product["name"]
+    #     price = product["current_price"]
+    #     bool = product["is_lower_price"]
+
+    #     if len(name) > 82:
+    #         name = name[0:79] + "..."
+    #     if bool is True:
+    #         bool = "Yes"
+    #     elif bool is False:
+    #         bool = "No"
+
+    #     table_entries.append([id, name, price, bool])
+
+    max_rows = len(table_entries)
+
+    table = [sg.Table(table_entries, headings=["ID", "Name", "Current Price", "Reduced"], auto_size_columns=False, 
+                      col_widths=[8, 60, 12, 8], num_rows=max_rows, justification="center", enable_events=True, 
+                      enable_click_events=True, key="-TABLE-")]
+
+    delete_button = [sg.Button("Delete", key="-DELETE-")]
+    
+    layout = [[products_title, products_button], [new_line], [table], [delete_button]]
+
+    return sg.Window('Tracking List', layout, finalize=True)
+
+
+# return a list of all tracked products to be used as table entries in secondary window
+def createProductsTableEntries():
     table_entries = []
+    
+    products = dbm.getAllProducts()     # read JSON file and get list of products
 
     for product in products:
+        id = product["id"]
         name = product["name"]
         price = product["current_price"]
         bool = product["is_lower_price"]
@@ -50,18 +85,9 @@ def createSecondaryWindow():
         elif bool is False:
             bool = "No"
 
-        table_entries.append([name, price, bool])
+        table_entries.append([id, name, price, bool])
 
-    max_rows = len(table_entries)
-
-    table = [sg.Table(table_entries, headings=["Name", "Current Price", "Reduced"], auto_size_columns=False, 
-                      col_widths=[60, 12, 8], num_rows=max_rows, justification="center")]
-
-    delete_button = [sg.Button("Delete", key="-DELETE-")]
-    
-    layout = [[products_title, products_button], [new_line], [table], [delete_button]]
-
-    return sg.Window('Tracking List', layout, finalize=True)
+    return table_entries
 
 
 # update all products every hour
@@ -73,6 +99,7 @@ def checkUpdateInterval(driver, time_stamp):
         return curr_time_stamp
 
     return time_stamp
+
 
 # get current time as number of seconds
 def getCurrentTimeAsInteger():
@@ -98,6 +125,7 @@ def runEventLoop():
         # open the main window and set secondary window to null
         window_main = createPrimaryWindow()
         window_tracked_products = None
+        table_entries = createProductsTableEntries()
 
         time = getCurrentTimeAsInteger()
 
@@ -132,12 +160,22 @@ def runEventLoop():
                 # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
                     if window_tracked_products is None:
-                        window_tracked_products = createSecondaryWindow()
+                        window_tracked_products = createSecondaryWindow(table_entries)
                 
                 # Imitate refresh; close window, re-read JSON file, and show all products
                 elif event == '-REFRESH-':
                     window.close()
-                    window_tracked_products = createSecondaryWindow()
+                    window_tracked_products = createSecondaryWindow(table_entries)
+                
+                # Delete a tracked product
+                elif event == '-DELETE-':
+                    if values["-TABLE-"] == []:
+                        sg.popup("No Table Row Selected.")
+                    else:
+                        if sg.popup_ok_cancel("Are you sure you want to delete this product from your tracking list?") == 'OK':
+                            dbm.deleteProduct((table_entries[values['-TABLE-'][0]])[0])
+                            del table_entries[values['-TABLE-'][0]]
+                            window['-TABLE-'].update(values=table_entries)
 
             except NoProductPriceFound:
                 window['-ERROR-'].update('ERROR: The price of the product could not be found.')
@@ -145,8 +183,8 @@ def runEventLoop():
                 window['-ERROR-'].update('ERROR: The name of the product could not be found.')
             except InvalidUrl:
                 window['-ERROR-'].update('ERROR: Invalid URL provided.')
-            except Exception:
-                pass
+            except Exception as e:
+                print(e)
 
     except Exception as e:
         raise e

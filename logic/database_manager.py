@@ -65,13 +65,14 @@ def deleteProduct(id):
     with open("./data/products.json", "r+") as file:
         all_products_dict = json.loads(file.read())         # read file and load current JSON content
         all_products_list = all_products_dict["products"]   # list of dictionaries (one product = one dict)
-        new_dict = {}
+        new_dict = {"products": []}
 
         for index, product in enumerate(all_products_list):
             if product["id"] == id:
                 del all_products_list[index]
                 break
         
-        new_dict["products"].append(all_products_list)
+        new_dict["products"] = all_products_list
         file.seek(0)    # go to beginning of file
         json.dump(new_dict, file, indent = 4)   # write changes to JSON file
+        file.truncate()
