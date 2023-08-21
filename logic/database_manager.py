@@ -12,7 +12,7 @@ def insertProduct(product):
         if isInDatabase is True:
             return
         
-        lastId = findLastId(all_products_list) + 1
+        lastId = findHighestId(all_products_list) + 1
 
         new_product = {"id": lastId, "name": product.getName(), "start_price": product.getStartPrice(), "current_price": product.getCurrentPrice(),
                     "previous_price": product.getPreviousPrice(), "availability": product.getAvailability(),
@@ -39,13 +39,12 @@ def checkDuplicateProduct(url, all_products):
 
 
 # find the ID of the last product
-def findLastId(all_products):
+def findHighestId(all_products):
     lastId = 0
-    size = len(all_products)
 
-    if size > 0:
-        lastProduct = all_products[size-1]
-        lastId = lastProduct["id"]
+    for product in all_products:
+        if product["id"] > lastId:
+            lastId = product["id"]
 
     return lastId
 

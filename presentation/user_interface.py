@@ -5,9 +5,8 @@ from logic.exception import *
 import logic.product_updater as pu
 from datetime import datetime
 
+
 # return main window (tracking a new product)
-
-
 def createPrimaryWindow():
     # Track a product
     track_title = [sg.Text('Track a Product', font=(
@@ -182,8 +181,7 @@ def runEventLoop():
                     sg.popup("No Row Selected.", title=None)
                 else:
                     if sg.popup_ok_cancel("Are you sure you want to delete this product from your tracking list?", title="Delete Tracked Product") == 'OK':
-                        dbm.deleteProduct(
-                            (table_entries[values['-TABLE-'][0]])[0])
+                        dbm.deleteProduct((table_entries[values['-TABLE-'][0]])[0])
                         del table_entries[values['-TABLE-'][0]]
                         window['-TABLE-'].update(values=table_entries)
 
