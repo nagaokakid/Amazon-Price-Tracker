@@ -1,0 +1,6 @@
+- Install selenium and Chrome driver manager via python
+- 
+
+Webdriver Manager issues
+$ python3 -m pip install webdriver-manager --upgrade
+$ python3 -m pip install packaging
