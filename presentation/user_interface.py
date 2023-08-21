@@ -27,38 +27,19 @@ def createPrimaryWindow():
 
 # return second window (all tracked products)
 def createSecondaryWindow(table_entries):
+    
     # header info
     products_title = [sg.Text('All Tracked Products', font=("Default", 14, "bold"), justification='left')]
     products_button = [sg.Button("Refresh", key='-REFRESH-')]
 
     new_line = [sg.Text("\n")]
 
-    # all product objects from JSON file
-    # products = dbm.getAllProducts()
-
-    # table_entries = []
-
-    # for product in products:
-    #     id = product["id"]
-    #     name = product["name"]
-    #     price = product["current_price"]
-    #     bool = product["is_lower_price"]
-
-    #     if len(name) > 82:
-    #         name = name[0:79] + "..."
-    #     if bool is True:
-    #         bool = "Yes"
-    #     elif bool is False:
-    #         bool = "No"
-
-    #     table_entries.append([id, name, price, bool])
-
-    max_rows = len(table_entries)
-
+    # tracked products in table form
     table = [sg.Table(table_entries, headings=["ID", "Name", "Current Price", "Reduced"], auto_size_columns=False, 
-                      col_widths=[8, 60, 12, 8], num_rows=max_rows, justification="center", enable_events=True, 
+                      col_widths=[8, 60, 12, 8], num_rows=10, justification="center", enable_events=True, 
                       enable_click_events=True, key="-TABLE-")]
 
+    # delete a tracked product via this button
     delete_button = [sg.Button("Delete", key="-DELETE-")]
     
     layout = [[products_title, products_button], [new_line], [table], [delete_button]]
@@ -116,11 +97,13 @@ def runEventLoop():
         # init web driver
         driver = ws.createWebDriver()
 
-        # update all product prices
-        pu.updateProducts(driver)
-
-        # set color scheme
+        # set color scheme for UI
         sg.theme('BlueMono')
+
+        sg.popup_no_wait("Checking the current price for products on your tracking list. Please wait a moment...", title="Updating", non_blocking=True, auto_close=True, auto_close_duration=60)
+
+        # update all prices on tracking list
+        pu.updateProducts(driver)
 
         # open the main window and set secondary window to null
         window_main = createPrimaryWindow()
@@ -137,14 +120,16 @@ def runEventLoop():
 
                 # Window has been closed
                 if event == sg.WIN_CLOSED:
-                    
-                    if window:
-                        window.close()
+
+                    window.close()
                     
                     if window == window_tracked_products:   # Second window is closed, so mark as closed
                         window_tracked_products = None
                     elif window == window_main:             # First window is closed, so end program
+                        window_main = None
                         ws.closeWebDriver(driver)
+                    
+                    if window_main == None and window_tracked_products == None:
                         break
                 
                 # Add a new product to the tracking list
@@ -156,6 +141,10 @@ def runEventLoop():
                         dbm.insertProduct(product)
                         window['-ERROR-'].update(text_color='Green')
                         window['-ERROR-'].update('The product has been added to your tracking list.')
+                        
+                        if window_tracked_products:
+                            table_entries = createProductsTableEntries()
+                            window_tracked_products['-TABLE-'].update(values=table_entries)
 
                 # Open new window and show all tracked products if window doesn't already exist
                 elif event == '-GO-':
@@ -164,15 +153,15 @@ def runEventLoop():
                 
                 # Imitate refresh; close window, re-read JSON file, and show all products
                 elif event == '-REFRESH-':
-                    window.close()
-                    window_tracked_products = createSecondaryWindow(table_entries)
+                    table_entries = createProductsTableEntries()
+                    window['-TABLE-'].update(values=table_entries)
                 
                 # Delete a tracked product
                 elif event == '-DELETE-':
                     if values["-TABLE-"] == []:
-                        sg.popup("No Table Row Selected.")
+                        sg.popup("No Row Selected.", title=None)
                     else:
-                        if sg.popup_ok_cancel("Are you sure you want to delete this product from your tracking list?") == 'OK':
+                        if sg.popup_ok_cancel("Are you sure you want to delete this product from your tracking list?", title="Delete Tracked Product") == 'OK':
                             dbm.deleteProduct((table_entries[values['-TABLE-'][0]])[0])
                             del table_entries[values['-TABLE-'][0]]
                             window['-TABLE-'].update(values=table_entries)
@@ -183,8 +172,10 @@ def runEventLoop():
                 window['-ERROR-'].update('ERROR: The name of the product could not be found.')
             except InvalidUrl:
                 window['-ERROR-'].update('ERROR: Invalid URL provided.')
-            except Exception as e:
-                print(e)
+            except Exception:
+                pass
 
     except Exception as e:
+        print("\nFailed to connect to Chrome web browser. Please check your Internet connection.")
+        # quit()
         raise e
