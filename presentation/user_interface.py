@@ -106,18 +106,18 @@ def runEventLoop():
         raise e
 
     try:
+        # set color scheme for UI
+        sg.theme('BlueMono')
+
+        sg.popup_no_wait("Checking the current price for products on your tracking list. Please wait a moment...",
+                         title="Updating", non_blocking=True, auto_close=True, auto_close_duration=60)
+        
         pu.updateProducts(driver)   # update price of all products on tracking list (if changed)
     except Exception as e:
         print("\nFailed to update one or more products on the tracking list.")
         raise e
 
     try:
-        # set color scheme for UI
-        sg.theme('BlueMono')
-
-        sg.popup_no_wait("Checking the current price for products on your tracking list. Please wait a moment...",
-                         title="Updating", non_blocking=True, auto_close=True, auto_close_duration=60)
-
         # open the main window and set secondary window to null
         window_main = createPrimaryWindow()
         window_tracked_products = None
@@ -195,5 +195,8 @@ def runEventLoop():
                 'ERROR: The name of the product could not be found.')
         except InvalidUrl:
             window['-ERROR-'].update('ERROR: Invalid URL provided.')
-        except Exception:
-            pass
+        except DatabaseError as e:
+            sg.popup_error
+            raise e
+        except Exception as e:
+            raise e
