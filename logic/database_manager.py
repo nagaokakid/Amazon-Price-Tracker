@@ -51,7 +51,7 @@ def findHighestId(all_products):
 
 # return a list of all tracked products within JSON file
 def getAllProducts():
-    products_dict = {}
+    products_dict = None
 
     with open("./data/products.json", "r") as file:
         products_dict = json.loads(file.read())

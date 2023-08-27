@@ -9,6 +9,7 @@ def main():
         ui.runEventLoop()
     except Exception as e:
         traceback.print_exception(e)
+        quit()
 
 
 # necessary to run main function

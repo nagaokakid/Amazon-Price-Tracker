@@ -52,12 +52,12 @@
             "id": 7,
             "name": "Apple 2023 MacBook Air Laptop with M2 chip: 15.3-inch Liquid Retina Display, 8GB RAM, 256GB SSD Storage, 1080p FaceTime HD Camera, Touch ID. Works with iPhone/iPad; Starlight, English",
             "start_price": "$1,739.99",
-            "current_price": "$1,739.99",
+            "current_price": "$1,648.99",
             "previous_price": "$1,739.99",
             "availability": "In Stock",
             "creation_date": "16/08/2023 22:12:57",
             "last_update": "16/08/2023 22:12:57",
-            "is_lower_price": false,
+            "is_lower_price": true,
             "url": "https://www.amazon.ca/gp/product/B0C7686169/ref=s9_acss_bw_cg_JK34RAPR_1a1_w?pf_rd_m=A1IM4EOPHS76S7&pf_rd_s=merchandised-search-2&pf_rd_r=12SE3TYVPJDHZT0SXFNW&pf_rd_t=101&pf_rd_p=33c40f7e-5c18-495a-961d-0e338429f447&pf_rd_i=667823011"
         },
         {
@@ -76,12 +76,12 @@
             "id": 9,
             "name": "ZOJI Zojirushi NP-HCC10XH Induction Heating System Rice Cooker and Warmer, 1 L (Up to 5.5 cups), Stainless Dark Gray",
             "start_price": "$332.98",
-            "current_price": "$332.98",
+            "current_price": "$331.14",
             "previous_price": "$332.98",
             "availability": "In Stock",
             "creation_date": "16/08/2023 22:15:22",
             "last_update": "16/08/2023 22:15:22",
-            "is_lower_price": false,
+            "is_lower_price": true,
             "url": "https://www.amazon.ca/ZOJI-Zojirushi-NP-HCC10XH-Induction-Stainless/dp/B00VAG84O2/ref=pd_rhf_d_ee_s_pd_sbs_rvi_sccl_2_2/137-6463703-6972919?pd_rd_w=OgpHd&content-id=amzn1.sym.c4b12d63-26ee-451b-a00e-167063525dc5&pf_rd_p=c4b12d63-26ee-451b-a00e-167063525dc5&pf_rd_r=VBF4GRW7VD7R7H20WG0Z&pd_rd_wg=ZJ65a&pd_rd_r=7a200eb1-e612-440e-a6f7-db97a0b28077&pd_rd_i=B00VAG84O2&psc=1"
         },
         {
