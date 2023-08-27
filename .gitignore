@@ -1,0 +1,3 @@
+# ignore all python cache files and folders generated at runtime
+.pyc
+**/__pycache__/
