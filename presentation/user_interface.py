@@ -103,7 +103,6 @@ def runEventLoop():
         driver = ws.createWebDriver()   # init web driver
     except Exception as e:
         print("\nFailed to download and execute the Chrome web driver. Please check your Internet connection.")
-        ws.closeWebDriver(driver)
         raise e
 
     try:
@@ -199,7 +198,7 @@ def runEventLoop():
         except InvalidUrl:
             window['-ERROR-'].update('ERROR: Invalid URL provided.')
         except DatabaseError as e:
-            sg.popup_error
+            sg.popup_error("A problem occurred while trying to interact with the tracked products list.", title="Error")
             ws.closeWebDriver(driver)
             raise e
         except Exception as e:
