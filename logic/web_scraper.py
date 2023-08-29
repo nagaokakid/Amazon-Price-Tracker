@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from logic.product import *
 from logic.exception import *
 
+
 # Initialize options and service for chrome web driver, and then create it
 def createWebDriver():
     options = Options()

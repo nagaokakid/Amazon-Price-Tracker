@@ -9,6 +9,7 @@ def main():
         ui.runEventLoop()
     except Exception as e:
         traceback.print_exception(e)
+        print("\nA fatal error occurred within the program. Shutting down now...\n")
 
 
 # necessary to run main function

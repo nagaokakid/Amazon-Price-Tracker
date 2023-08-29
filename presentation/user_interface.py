@@ -115,6 +115,7 @@ def runEventLoop():
         pu.updateProducts(driver)   # update price of all products on tracking list (if changed)
     except Exception as e:
         print("\nFailed to update one or more products on the tracking list.")
+        ws.closeWebDriver(driver)
         raise e
 
     try:
@@ -126,6 +127,7 @@ def runEventLoop():
         time = getCurrentTimeAsInteger()
     except Exception as e:
         print("\nFailed to obtain product information from the tracking list database.")
+        ws.closeWebDriver(driver)
         raise e
 
         # event loop
@@ -196,7 +198,9 @@ def runEventLoop():
         except InvalidUrl:
             window['-ERROR-'].update('ERROR: Invalid URL provided.')
         except DatabaseError as e:
-            sg.popup_error
+            sg.popup_error("A problem occurred while trying to interact with the tracked products list.", title="Error")
+            ws.closeWebDriver(driver)
             raise e
         except Exception as e:
+            ws.closeWebDriver(driver)
             raise e
