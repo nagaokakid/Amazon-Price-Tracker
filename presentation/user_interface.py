@@ -5,9 +5,8 @@ from logic.exception import *
 import logic.product_updater as pu
 from datetime import datetime
 
+
 # return main window (tracking a new product)
-
-
 def createPrimaryWindow():
     # Track a product
     track_title = [sg.Text('Track a Product', font=(
