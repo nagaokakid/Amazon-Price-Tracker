@@ -9,6 +9,9 @@ def updateProducts(driver):
             all_products_dict = json.loads(file.read())             # root dictionary in JSON file
             all_products_list = all_products_dict["products"]       # list of dictionary objects
 
+            if len(all_products_list) == 0:
+                return
+
             for product in all_products_list:
                 base_string_before_check = product["current_price"]            # find current price in JSON file
                 price_string = base_string_before_check
