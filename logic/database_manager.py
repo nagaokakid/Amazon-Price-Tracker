@@ -93,3 +93,16 @@ def deleteProduct(id):
             file.truncate()
     except:
         raise DatabaseError
+
+
+# get the number of products in database
+def getSize():
+    try:
+        with open("./data/products.json", "r") as file:
+            all_products_dict = json.loads(file.read())
+            all_products_list = all_products_dict["products"]
+            size = len(all_products_list)
+    except:
+        raise DatabaseError
+
+    return size 
