@@ -11,7 +11,7 @@ This repository serves as a desktop app that allows you to track the price of Am
 - Type the command "git clone https://github.com/nagaokakid/AmazonPriceTracker.git" to download the repository onto your system.
 
 ### Run the app
-You must have python3 installed on your system to run the app. For instructions on python3 installation, click here: https://phoenixnap.com/kb/how-to-install-python-3-windows
+You must have python3 installed on your system to run the app. For instructions on python3 installation, click here: https://www.geeksforgeeks.org/download-and-install-python-3-latest-version/
 #### Windows
 On the command line, type the command "python3 main.py" to run the app. It will take several minutes to download the necessary components and launch the app.
 #### Linux
