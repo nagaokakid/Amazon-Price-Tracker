@@ -2,27 +2,21 @@
 VENV := venv
 
 # default target; no arguments
-all: venv
+all: $(VENV)
 
-activate: requirements.txt
+venv: main.py data/ logic/ presentation/
 	python3 -m venv $(VENV)
+	$(VENV)/Scripts/activate
 	mkdir $(VENV)/app/
-	cp -r Makefile data/ logic/ presentation/ main.py requirements.txt $(VENV)/app
+	cp -r data/ logic/ presentation/ main.py requirements.txt $(VENV)/app
 	pip install -r $(VENV)/app/requirements.txt
 
-# venv is a shortcut target (Scripts/activate path for Windows)
-venv: activate
-	$(VENV)/Scripts/activate
-
-# run the program, but first create the virtual environment and install requirements
 run: venv
-	cd ./$(VENV)/app/
-	python main.py
+	python3 $(VENV)/app/main.py
 
-# remove activation file and python cache files
+# remove virtual environment and all files within it
 clean:
 	rm -rf $(VENV)
-	find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
 
 # run the recipes, regardless if files with same names exist
-.PHONY: all venv run clean
+.PHONY: all venv clean run

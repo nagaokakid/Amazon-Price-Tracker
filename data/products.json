@@ -16,8 +16,8 @@
             "id": 4,
             "name": "Lenovo ThinkCentre M900 SFF Desktop Computer, Intel Core i7-6700 Upto 4.0GHz, 32GB RAM, 1TB SSD, 4K 2-Monitor Support DisplayPort, HDMI, DVD-RW, AC Wi-Fi, Bluetooth, TDL - Windows 10 Pro (RENEWED)",
             "start_price": "$339.00",
-            "current_price": "$329.0",
-            "previous_price": "$339.0",
+            "current_price": "$318.00",
+            "previous_price": "$329.0",
             "availability": "In Stock.",
             "creation_date": "16/08/2023 22:09:45",
             "last_update": "16/08/2023 22:09:45",
@@ -73,18 +73,6 @@
             "url": "https://www.amazon.ca/THINKA-PROCEDURE-MASK-EARLOOPS-50pcs/dp/B08K4J9755/ref=zg_bs_c_industrial_sccl_3/137-6463703-6972919?pd_rd_w=fqKbQ&content-id=amzn1.sym.6f50da21-510d-4da6-9182-ff71d80f9354&pf_rd_p=6f50da21-510d-4da6-9182-ff71d80f9354&pf_rd_r=X88ZGHC3H8CX7N3TDSNK&pd_rd_wg=Uz2uy&pd_rd_r=8c7a0f9e-2dab-40f1-9c30-6317c989d234&pd_rd_i=B08K4J9755&psc=1"
         },
         {
-            "id": 9,
-            "name": "ZOJI Zojirushi NP-HCC10XH Induction Heating System Rice Cooker and Warmer, 1 L (Up to 5.5 cups), Stainless Dark Gray",
-            "start_price": "$332.98",
-            "current_price": "$331.14",
-            "previous_price": "$332.98",
-            "availability": "In Stock",
-            "creation_date": "16/08/2023 22:15:22",
-            "last_update": "16/08/2023 22:15:22",
-            "is_lower_price": true,
-            "url": "https://www.amazon.ca/ZOJI-Zojirushi-NP-HCC10XH-Induction-Stainless/dp/B00VAG84O2/ref=pd_rhf_d_ee_s_pd_sbs_rvi_sccl_2_2/137-6463703-6972919?pd_rd_w=OgpHd&content-id=amzn1.sym.c4b12d63-26ee-451b-a00e-167063525dc5&pf_rd_p=c4b12d63-26ee-451b-a00e-167063525dc5&pf_rd_r=VBF4GRW7VD7R7H20WG0Z&pd_rd_wg=ZJ65a&pd_rd_r=7a200eb1-e612-440e-a6f7-db97a0b28077&pd_rd_i=B00VAG84O2&psc=1"
-        },
-        {
             "id": 10,
             "name": "Cosori Proii Air Fryer Oven Combo, 5.8qt Max Xl Large Cooker with 12 One-touch Saveable Custom Functions, Cookbook and Oneline Recipes, Nonstick and Dishwasher-safe Detachable Square Basket",
             "start_price": "$149.49",
@@ -131,6 +119,54 @@
             "last_update": "16/08/2023 22:22:56",
             "is_lower_price": false,
             "url": "https://www.amazon.ca/Pack-SimpleHouseware-Foldable-Storage-Black/dp/B074GGTSQC?ref_=Oct_d_otopr_d_6647801011_0&pd_rd_w=Qux3G&content-id=amzn1.sym.b8297fd9-5dde-4da5-8820-7a1773a773e2&pf_rd_p=b8297fd9-5dde-4da5-8820-7a1773a773e2&pf_rd_r=SVT1MXSVDV3MR9G0WVHT&pd_rd_wg=Ap51I&pd_rd_r=08be4e00-4f43-44d6-a9b4-1f9dfa13e4af&pd_rd_i=B074GGTSQC"
+        },
+        {
+            "id": 14,
+            "name": "Chromecast with Google TV (HD) - Streaming Stick Entertainment On Your TV with Voice Search - Watch Movies, Shows, and Live TV in 1080p HD - Snow",
+            "start_price": "$29.98",
+            "current_price": "$29.98",
+            "previous_price": "$29.98",
+            "availability": "In Stock",
+            "creation_date": "29/08/2023 18:27:51",
+            "last_update": "29/08/2023 18:27:51",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/Chromecast-Google-TV-Streaming-Entertainment/dp/B0BCN4FXD5/ref=zg_bs_c_electronics_sccl_3/137-6463703-6972919?pd_rd_w=yDX7M&content-id=amzn1.sym.6f50da21-510d-4da6-9182-ff71d80f9354&pf_rd_p=6f50da21-510d-4da6-9182-ff71d80f9354&pf_rd_r=H7BVAZXKK75N0RKWY3N9&pd_rd_wg=5z6xb&pd_rd_r=3b2c3381-54ab-42b0-a41e-664de3ebca53&pd_rd_i=B0BCN4FXD5&psc=1"
+        },
+        {
+            "id": 15,
+            "name": "TP-Link AXE5400 Tri-Band WiFi 6E Router (Archer AXE75) - Gigabit Wireless Internet Router, AX Router for Gaming, VPN Router, WPA3",
+            "start_price": "$199.97",
+            "current_price": "$199.97",
+            "previous_price": "$199.97",
+            "availability": "In Stock",
+            "creation_date": "29/08/2023 18:29:17",
+            "last_update": "29/08/2023 18:29:17",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/TP-Link-AXE5400-Tri-Band-Archer-AXE75/dp/B0B6M2N6PJ?ref_=ast_sto_dp&th=1&psc=1"
+        },
+        {
+            "id": 16,
+            "name": "HP RGB Gaming Desktop Computer, Intel Quad Core I7-6700 up to 4.0GHz, GeForce RTX 2060 Super 8G GDDR6, 32GB DDR4 Memory, 1T SSD + 3T, RGB Keyboard & Mouse, 600M WiFi & Bluetooth, Win 10 Pro (Renewed)",
+            "start_price": "$729.99",
+            "current_price": "$729.99",
+            "previous_price": "$729.99",
+            "availability": "In Stock",
+            "creation_date": "29/08/2023 18:30:06",
+            "last_update": "29/08/2023 18:30:06",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/HP-Desktop-Computer-Keyboard-Bluetooth/dp/B0C7HH46VR?ref_=Oct_d_otopr_d_15247749011_1&pd_rd_w=TYTr5&content-id=amzn1.sym.b8297fd9-5dde-4da5-8820-7a1773a773e2&pf_rd_p=b8297fd9-5dde-4da5-8820-7a1773a773e2&pf_rd_r=040C99N0R89G86KZ4R8E&pd_rd_wg=eS7Ob&pd_rd_r=3262c127-12fb-4cf9-b2dc-5ff359105736&pd_rd_i=B0C7HH46VR"
+        },
+        {
+            "id": 17,
+            "name": "4 Pack Solar Post Lights Outdoor Solar Post Cap Lights, 20 Lumen High Brightness Waterproof LED Fence Post Solar Lights with Base for 4x4 5x5 6x6 Wooden Posts,Black",
+            "start_price": "$40.99",
+            "current_price": "$40.99",
+            "previous_price": "$40.99",
+            "availability": "In Stock",
+            "creation_date": "29/08/2023 18:33:58",
+            "last_update": "29/08/2023 18:33:58",
+            "is_lower_price": false,
+            "url": "https://www.amazon.ca/Lights-Outdoor-Brightness-Waterproof-Wooden/dp/B09JLJV6T7?ref_=Oct_d_obs_d_8907854011_2&pd_rd_w=0mTjv&content-id=amzn1.sym.40917b72-b081-4fdc-8cb3-d4969de74102&pf_rd_p=40917b72-b081-4fdc-8cb3-d4969de74102&pf_rd_r=1M5WWT3N20PR25WR7D5T&pd_rd_wg=dGTmV&pd_rd_r=d8ab75f3-34f4-4ae9-87c7-bce8ae9c412c&pd_rd_i=B09JLJV6T7"
         }
     ]
 }

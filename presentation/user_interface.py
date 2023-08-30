@@ -32,11 +32,7 @@ def createPrimaryWindow():
 def createSecondaryWindow(table_entries):
 
     # header info
-    products_title = [sg.Text('All Tracked Products', font=(
-        "Default", 14, "bold"), justification='left')]
-    products_button = [sg.Button("Refresh", key='-REFRESH-')]
-
-    new_line = [sg.Text("\n")]
+    products_title = [sg.Text('All Tracked Products', font=("Default", 14, "bold"), justification='left')]
 
     # tracked products in table form
     table = [sg.Table(table_entries, headings=["ID", "Name", "Current Price", "Reduced"], auto_size_columns=False,
@@ -44,10 +40,9 @@ def createSecondaryWindow(table_entries):
                       enable_click_events=True, key="-TABLE-")]
 
     # delete a tracked product via this button
-    delete_button = [sg.Button("Delete", key="-DELETE-")]
+    delete_button = [sg.Button("Delete", key="-DELETE-", button_color="red")]
 
-    layout = [[products_title, products_button],
-              [new_line], [table], [delete_button]]
+    layout = [[products_title], [table], [delete_button]]
 
     return sg.Window('Tracking List', layout, finalize=True)
 
@@ -81,8 +76,9 @@ def checkUpdateInterval(driver, time_stamp):
     curr_time_stamp = getCurrentTimeAsInteger()
 
     if curr_time_stamp - time_stamp > 3600:
+        sg.popup_no_wait("Checking the current price for products on your tracking list. Please wait a moment...", title="Updating", non_blocking=True, auto_close=True, auto_close_duration=60)
         pu.updateProducts(driver)
-        return curr_time_stamp
+        return getCurrentTimeAsInteger()
 
     return time_stamp
 
@@ -105,18 +101,18 @@ def runEventLoop():
         raise e
 
     try:
-        pu.updateProducts(driver)   # update price of all products on tracking list (if changed)
-    except Exception as e:
-        print("\nFailed to update one or more products on the tracking list.")
-        raise e
-
-    try:
         # set color scheme for UI
         sg.theme('BlueMono')
 
-        sg.popup_no_wait("Checking the current price for products on your tracking list. Please wait a moment...",
-                         title="Updating", non_blocking=True, auto_close=True, auto_close_duration=60)
+        if dbm.getSize() > 0:
+            sg.popup_no_wait("Checking the current price for products on your tracking list. Please wait a moment...", title="Updating", non_blocking=True, auto_close=True, auto_close_duration=60)
+            pu.updateProducts(driver)   # update price of all products on tracking list (if changed)
+    except Exception as e:
+        print("\nFailed to update one or more products on the tracking list.")
+        ws.closeWebDriver(driver)
+        raise e
 
+    try:
         # open the main window and set secondary window to null
         window_main = createPrimaryWindow()
         window_tracked_products = None
@@ -125,6 +121,7 @@ def runEventLoop():
         time = getCurrentTimeAsInteger()
     except Exception as e:
         print("\nFailed to obtain product information from the tracking list database.")
+        ws.closeWebDriver(driver)
         raise e
 
         # event loop
@@ -149,31 +146,28 @@ def runEventLoop():
 
             # Add a new product to the tracking list
             elif event == '-ADD-':
+                window['-ERROR-'].update('')
+                window['-ERROR-'].update(text_color='Red')
+
+                if dbm.getSize() == 15:
+                    window['-ERROR-'].update("Maximum number of products reached for your tracking list (15).\nPlease delete an existing product and then try again.")
+                    continue
+
                 if values[0] != "":
-                    window['-ERROR-'].update('')
-                    window['-ERROR-'].update(text_color='Red')
                     # create product with URL (values[0])
                     product = ws.createProduct(driver, values[0])
                     dbm.insertProduct(product)
                     window['-ERROR-'].update(text_color='Green')
-                    window['-ERROR-'].update(
-                        'The product has been added to your tracking list.')
+                    window['-ERROR-'].update('The product has been added to your tracking list.')
 
                     if window_tracked_products:
                         table_entries = createProductsTableEntries()
-                        window_tracked_products['-TABLE-'].update(
-                            values=table_entries)
+                        window_tracked_products['-TABLE-'].update(values=table_entries)
 
             # Open new window and show all tracked products if window doesn't already exist
             elif event == '-GO-':
                 if window_tracked_products is None:
-                    window_tracked_products = createSecondaryWindow(
-                        table_entries)
-
-            # Imitate refresh; close window, re-read JSON file, and show all products
-            elif event == '-REFRESH-':
-                table_entries = createProductsTableEntries()
-                window['-TABLE-'].update(values=table_entries)
+                    window_tracked_products = createSecondaryWindow(table_entries)
 
             # Delete a tracked product
             elif event == '-DELETE-':
@@ -186,12 +180,15 @@ def runEventLoop():
                         window['-TABLE-'].update(values=table_entries)
 
         except NoProductPriceFound:
-            window['-ERROR-'].update(
-                'ERROR: The price of the product could not be found.')
+            window['-ERROR-'].update('The price of the product could not be found.\nThe product will not be added to your tracking list.')
         except NoProductNameFound:
-            window['-ERROR-'].update(
-                'ERROR: The name of the product could not be found.')
+            window['-ERROR-'].update('The name of the product could not be found.\nThe product will not be added to your tracking list.')
         except InvalidUrl:
-            window['-ERROR-'].update('ERROR: Invalid URL provided.')
-        except Exception:
-            pass
+            window['-ERROR-'].update('Invalid URL provided.')
+        except DatabaseError as e:
+            sg.popup_error("A problem occurred while trying to interact with the tracked products list.", title="Error")
+            ws.closeWebDriver(driver)
+            raise e
+        except Exception as e:
+            ws.closeWebDriver(driver)
+            raise e
