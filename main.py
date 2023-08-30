@@ -10,6 +10,7 @@ def main():
     except Exception as e:
         traceback.print_exception(e)
         print("\nA fatal error occurred within the program. Shutting down now...\n")
+        quit()
 
 
 # necessary to run main function
