@@ -5,14 +5,20 @@ This repository serves as a desktop app that allows you to track the price of Am
 
 # Getting Started
 
-### Clone the repository
-- Go to the command line on Linux or Windows, and create a new folder.
+## Clone the repository
+- Go to the terminal on Linux or the command prompt on Windows, and create a new folder.
 - Ensure that git is installed for your system (for instructions, click here: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 - Type the command "git clone https://github.com/nagaokakid/AmazonPriceTracker.git" to download the repository onto your system.
 
-### Run the app
+## Build the app
 You must have python3 installed on your system to run the app. For instructions on python3 installation, click here: https://www.geeksforgeeks.org/download-and-install-python-3-latest-version/
-#### Windows
-On the command line, type the command "python3 main.py" to run the app. It will take several minutes to download the necessary components and launch the app.
-#### Linux
-On the command line, type the command "make run" to run the app. It will take several minutes to create the virtual environment and launch the app. From then on, go to the venv/app/ directory and use the command "python3 main.py" to run the app in the virtual environment.
+### Windows
+In the command prompt, navigate to the folder containing the repository. Type the command "windows-version.bat" to run the app.
+### Linux
+In the terminal, navigate to the folder containing the repository. Type the command "make run" to run the app.
+
+After building the app via the command line on Windows or Linux, navigate to the folder venv\app\ and use the command "python3 main.py" to run the app from then on.
+
+**Happy Hunting!**
+
+
